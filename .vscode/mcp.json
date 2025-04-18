@@ -2,14 +2,14 @@
     "servers": {
         "kusto": {
             "type": "stdio",
-            "command": "dotnet",
+            "command": "docker",
             "args": [
                 "run",
-                "--project",
-                "${cwd}/src/Server.csproj",
-                "--",
-                "--settings",
-                "${cwd}/src/settings.yaml"
+                "-i",
+                "--rm",
+                "-v",
+                "${workspaceFolder}/src/Server/settings.yaml:/app/settings.yaml",
+                "kusto-mcp-server:latest"
             ]
         }
     }

@@ -9,6 +9,22 @@ namespace Server;
 [McpServerToolType]
 public static class ManagedLabsKustoTool
 {
+    [McpServerTool(Name = "list-supported-tables"), Description("Lists all supported tables.")]
+    public static Task<ListSupportedTablesResult> ListSupportedTablesAsync(
+        SettingsLoader settingsLoader,
+        ILoggerFactory loggerFactory)
+    {
+        try
+        {
+            return Task.FromResult(ListSupportedTablesResult.FromSettings(settingsLoader.Get()));
+        }
+        catch (Exception ex)
+        {
+            loggerFactory.CreateLogger(nameof(ManagedLabsKustoTool)).LogError(ex, "Error encountered when listing supported tables");
+            throw;
+        }
+    }
+
     [McpServerTool(Name = "generate-kusto-query"), Description("Generates a KQL query to using the given table information.")]
     public static async Task<string> GenerateResourceQueryAsync(
         NL2KQLClientService nl2kql,
@@ -132,6 +148,29 @@ public static class ManagedLabsKustoTool
         string Prompt,
         [Description("Output type for the query results")]
         RunQueryOutputType OutputType) : QueryParameters(Table, Category, Prompt);
+
+    [Description("Responses to the list supported tables request")]
+    public record ListSupportedTablesResult(
+        [Description("List of supported tables")]
+        List<SupportedTable> Tables)
+    {
+        public static ListSupportedTablesResult FromSettings(Settings settings)
+        {
+            var tables = new List<SupportedTable>(settings.Kusto.Count);
+            foreach (var kustoSettings in settings.Kusto)
+            {
+                tables.Add(new SupportedTable(kustoSettings.Name, kustoSettings.Category));
+            }
+
+            return new ListSupportedTablesResult(tables);
+        }
+    }
+
+    public record SupportedTable(
+        [Description("Name of the table")]
+        string Name,
+        [Description("Category the table exists within")]
+        string Category);
 
     private static string StripCodeBlock(string query)
     {

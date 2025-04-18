@@ -403,4 +403,4 @@ FodyWeavers.xsd
 !.vscode/mcp.json
 
 # Ignore test settings file
-src/settings.yaml
+src/Server/settings.yaml

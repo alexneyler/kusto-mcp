@@ -97,10 +97,8 @@ try
 catch (Exception ex)
 {
     host.Services.GetRequiredService<ILogger<Program>>().LogError("Could not load settings: {ErrorMessage}", ex.Message);
-    return -1;
+    return;
 }
 
 // Run the application
 await host.RunAsync();
-
-return 0;
