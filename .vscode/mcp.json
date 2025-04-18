@@ -1,0 +1,16 @@
+{
+    "servers": {
+        "kusto": {
+            "type": "stdio",
+            "command": "dotnet",
+            "args": [
+                "run",
+                "--project",
+                "${cwd}/src/Server.csproj",
+                "--",
+                "--settings",
+                "${cwd}/src/settings.yaml"
+            ]
+        }
+    }
+}
