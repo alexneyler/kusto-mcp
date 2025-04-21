@@ -169,7 +169,7 @@ Add this to your `.vscode/mcp.json`:
         "AZURE_OPENAI_KEY",
         "-e",
         "KUSTO_ACCESS_TOKEN",
-        "kusto-mcp-server:latest",
+        "alexeyler/kusto-mcp-server",
     ],
     "env": {
         "AZURE_OPENAI_KEY": "${input:azure-open-ai-key}",
