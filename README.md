@@ -73,7 +73,7 @@ kusto:
 - **accessToken** (optional): An optional user access token that can be used to connect to the given kusto database. If an access token is not provided, the tool will attempt to use the default azure credentials to execute on behalf of the user. This fallback currently only works if you run the server using `dotnet run` instead of `docker run`, and only inside of vs code. To generate an access token for a kusto database, you can run the following:
   ```ps
   az login
-  az account get-access-token --resource "<kusto-database>" --query "accessToken"
+  az account get-access-token --resource "your-kusto-database-url" --query "accessToken"
   ```
 - **prompts**: A list of prompts used for querying the Kusto database.
   - **type**: The type of the prompt (e.g., `system`, `user`, `assistant`).
@@ -139,7 +139,7 @@ kusto:
 
 ### Usage with VS Code
 Add this to your `.vscode/mcp.json`:
-```json
+```jsonc
 {
   "inputs": [
     {
