@@ -2,6 +2,7 @@
 using Kusto.Data;
 using Kusto.Data.Net.Client;
 using Microsoft.Extensions.Logging;
+using ModelContextProtocol;
 using System.Data;
 using System.Text;
 
@@ -44,9 +45,9 @@ public class KustoService(SettingsLoader settingsLoader, ILogger<KustoService> l
 
     private async Task<IDataReader> RunQueryCoreAsync(string category, string table, string query)
     {
-        if (!settings.TryGetKustoSettings(category, table, out var kustoSettings))
+        if (!this.settings.TryGetKustoSettings(category, table, out var kustoSettings))
         {
-            throw new ArgumentException($"No cluster information found for table {table} in category {category}. Supported tables: {string.Join(';', settings.Kusto.Select(s => $"Category: {s.Category}, Table: {s.Name}"))}");
+            throw new ArgumentException($"No cluster information found for table {table} in category {category}. Supported tables: {string.Join(';', this.settings.Kusto.Select(s => $"Category: {s.Category}, Table: {s.Name}"))}");
         }
 
         logger.LogInformation("Running query against database \"{Database}\": \n{Query}", kustoSettings.Database, query);
@@ -62,7 +63,7 @@ public class KustoService(SettingsLoader settingsLoader, ILogger<KustoService> l
         catch (Exception ex)
         {
             logger.LogError(ex, "Error encountered while executing query");
-            throw;
+            throw new McpException($"An error was encountered while executing query: {ex.Message}", ex, McpErrorCode.InternalError);
         }
     }
 }

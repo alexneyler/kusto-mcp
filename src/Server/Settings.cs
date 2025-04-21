@@ -20,6 +20,8 @@ public class Model
     public required string Endpoint { get; set; }
 
     public required string Deployment { get; set; }
+
+    public string? Key { get; set; }
 }
 
 public class KustoSettings

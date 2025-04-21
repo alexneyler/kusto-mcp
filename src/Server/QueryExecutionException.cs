@@ -1,7 +1,9 @@
-﻿namespace Server;
+﻿using ModelContextProtocol;
+
+namespace Server;
 
 internal class QueryExecutionException(string message, string query, Exception? innerException = null)
-    : Exception(message, innerException)
+    : McpException(message, innerException, McpErrorCode.InternalError)
 {
     public string Query
     {

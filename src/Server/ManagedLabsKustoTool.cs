@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using ModelContextProtocol;
 using ModelContextProtocol.Protocol.Types;
 using ModelContextProtocol.Server;
 using System.ComponentModel;
@@ -26,7 +27,7 @@ public static class ManagedLabsKustoTool
     }
 
     [McpServerTool(Name = "generate-kusto-query"), Description("Generates a KQL query to using the given table information.")]
-    public static async Task<string> GenerateResourceQueryAsync(
+    public static async Task<string> GenerateQueryAsync(
         NL2KQLClientService nl2kql,
         ILoggerFactory loggerFactory,
         [Description("Prompt to generate the KQL query. The prompt should be a natural language description of the query you want to generate.")]
@@ -45,7 +46,7 @@ public static class ManagedLabsKustoTool
     }
 
     [McpServerTool(Name = "execute-kusto-query"), Description("Generates and runs a KQL query against the given table. Returns results in Json format or Csv format, depending on the OutputType parameter.")]
-    public static async Task<string> RunResourceQueryAsync(
+    public static async Task<string> ExecuteQueryAsync(
         NL2KQLClientService nl2kql,
         KustoService kustoService,
         ResourceService resourceService,
@@ -115,7 +116,7 @@ public static class ManagedLabsKustoTool
                 resourceService.AddResource(resource);
                 return JsonSerializer.Serialize(resource);
             default:
-                throw new ArgumentOutOfRangeException(nameof(parameters), parameters.OutputType, "Invalid output type specified.");
+                throw new McpException("Invalid output type specified.", McpErrorCode.InvalidParams);
         }
     }
 

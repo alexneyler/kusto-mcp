@@ -18,7 +18,7 @@ public class ResourceService(IMcpServer mcpServer)
     {
         if (!this.subscriptions.Remove(uri))
         {
-            throw new KeyNotFoundException($"Subscription with uri {uri} not found.");
+            throw new McpException($"Subscription with uri {uri} not found.", McpErrorCode.InvalidRequest);
         }
     }
 
@@ -26,7 +26,7 @@ public class ResourceService(IMcpServer mcpServer)
     {
         if (this.resources.ContainsKey(resource.Uri))
         {
-            throw new ArgumentException($"Resource with uri {resource.Uri} already exists.");
+            throw new McpException($"Resource with uri {resource.Uri} already exists.", McpErrorCode.InvalidRequest);
         }
 
         this.resources[resource.Uri] = resource;
@@ -37,7 +37,7 @@ public class ResourceService(IMcpServer mcpServer)
     {
         if (!this.resources.ContainsKey(resourceUri))
         {
-            throw new KeyNotFoundException($"Resource with uri {resourceUri} not found.");
+            throw new McpException($"Resource with uri {resourceUri} not found.", McpErrorCode.InvalidRequest);
         }
 
         this.resources.Remove(resourceUri);
@@ -48,7 +48,7 @@ public class ResourceService(IMcpServer mcpServer)
     {
         if (!this.resources.ContainsKey(resource.Uri))
         {
-            throw new KeyNotFoundException($"Resource with uri {resource.Uri} not found.");
+            throw new McpException($"Resource with uri {resource.Uri} not found.", McpErrorCode.InvalidRequest);
         }
 
         this.resources[resource.Uri] = resource;

@@ -1,4 +1,12 @@
 {
+    "inputs": [
+        {
+            "type": "promptString",
+            "id": "azure-open-ai-key",
+            "description": "Enter your Azure OpenAI key",
+            "password": true
+        }
+    ],
     "servers": {
         "kusto": {
             "type": "stdio",
@@ -9,8 +17,13 @@
                 "--rm",
                 "-v",
                 "${workspaceFolder}/src/Server/settings.yaml:/app/settings.yaml",
-                "kusto-mcp-server:latest"
-            ]
+                "-e",
+                "AZURE_OPENAI_KEY",
+                "kusto-mcp-server:latest",
+            ],
+            "env": {
+                "AZURE_OPENAI_KEY": "${input:azure-open-ai-key}"
+            },
         }
     }
 }
