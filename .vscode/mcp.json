@@ -5,6 +5,12 @@
             "id": "azure-open-ai-key",
             "description": "Enter your Azure OpenAI key",
             "password": true
+        },
+        {
+            "type": "promptString",
+            "id": "ml-resources-kusto-token",
+            "description": "Enter your Kusto token for the ML resources database",
+            "password": true
         }
     ],
     "servers": {
@@ -19,10 +25,13 @@
                 "${workspaceFolder}/src/Server/settings.yaml:/app/settings.yaml",
                 "-e",
                 "AZURE_OPENAI_KEY",
+                "-e",
+                "ML_RESOURCES_KUSTO_ACCESS_TOKEN",
                 "kusto-mcp-server:latest",
             ],
             "env": {
-                "AZURE_OPENAI_KEY": "${input:azure-open-ai-key}"
+                "AZURE_OPENAI_KEY": "${input:azure-open-ai-key}",
+                "ML_RESOURCES_KUSTO_ACCESS_TOKEN": "${input:ml-resources-kusto-token}",
             },
         }
     }

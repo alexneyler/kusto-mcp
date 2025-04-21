@@ -37,6 +37,8 @@ public class KustoSettings
     public required string Table { get; set; }
 
     public required List<KustoPrompt> Prompts { get; set; }
+
+    public string? AccessToken { get; set; }
 }
 
 public class KustoPrompt

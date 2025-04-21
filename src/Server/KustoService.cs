@@ -52,8 +52,12 @@ public class KustoService(SettingsLoader settingsLoader, ILogger<KustoService> l
 
         logger.LogInformation("Running query against database \"{Database}\": \n{Query}", kustoSettings.Database, query);
 
-        var kcsb = new KustoConnectionStringBuilder(kustoSettings.Endpoint)
-            .WithAadUserPromptAuthentication();
+        var kcsb = !string.IsNullOrEmpty(kustoSettings.AccessToken)
+            ? new KustoConnectionStringBuilder(kustoSettings.Endpoint)
+                .WithAadUserTokenAuthentication(kustoSettings.AccessToken)
+            : new KustoConnectionStringBuilder(kustoSettings.Endpoint)
+                .WithAadUserPromptAuthentication();
+
         using var client = KustoClientFactory.CreateCslQueryProvider(kcsb);
 
         try
