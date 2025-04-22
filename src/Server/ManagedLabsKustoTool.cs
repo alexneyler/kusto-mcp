@@ -4,6 +4,7 @@ using ModelContextProtocol.Protocol.Types;
 using ModelContextProtocol.Server;
 using System.ComponentModel;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Server;
 
@@ -124,6 +125,7 @@ public static class ManagedLabsKustoTool
         [Description("Additional properties for the resource")]
         Dictionary<string, string> Properties) : Resource;
 
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     [Description("Output type for the query results")]
     public enum RunQueryOutputType
     {
