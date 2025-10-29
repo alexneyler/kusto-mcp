@@ -3,10 +3,10 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="Azure.AI.OpenAI" Version="2.2.0-beta.4" />
-    <PackageVersion Include="Microsoft.Azure.Kusto.Data" Version="13.0.2" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.4" />
-    <PackageVersion Include="Microsoft.Extensions.Http" Version="9.0.4" />
+    <PackageVersion Include="Azure.AI.OpenAI" Version="2.1.0" />
+    <PackageVersion Include="Microsoft.Azure.Kusto.Data" Version="14.0.2" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.10" />
+    <PackageVersion Include="Microsoft.Extensions.Http" Version="9.0.10" />
     <PackageVersion Include="ModelContextProtocol" Version="0.1.0-preview.10" />
     <PackageVersion Include="YamlDotNet" Version="16.3.0" />
   </ItemGroup>
